@@ -1,0 +1,3 @@
+﻿  test.c
+E:\C_Study\Pointer_Depth_learning\Pointer_Depth_learning\test.c(7,10): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“int *”
+  Pointer_Depth_learning.vcxproj -> E:\C_Study\Pointer_Depth_learning\Debug\Pointer_Depth_learning.exe
