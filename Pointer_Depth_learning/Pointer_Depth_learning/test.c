@@ -1,8 +1,289 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
+//指向函数指针数组的指针
+int add(int x, int y)
+{
+	return x + y;
+}
+
+int main()
+{
+	char ch = '汉';
+	printf("%d", sizeof(ch));
+	int (*pf) (int, int) = add;//函数指针
+	int (*fparr[5])(int, int)={ add };//函数指针数组
+	int (*(*ppfarr)[5]) (int, int) = &fparr;//指向函数指针数组的指针
+	return 0;
+}
+
+
+
+//函数指针数组
+//int add(int x, int y) //类型：int (*)(int,int)
+//{
+//	return x + y;
+//}
+//
+//int sub(int x, int y) //类型：int (*)(int,int)
+//{
+//	return x - y;
+//}
+//
+//int mul(int x, int y) //类型：int (*)(int,int)
+//{
+//	return x * y;
+//}
+//int div(int x, int y) //类型：int (*)(int,int)
+//{
+//	return x / y;
+//}
+//void menu()
+//{
+//	printf("******************************\n");
+//	printf("*      1.add    2.sub        *\n");
+//	printf("*      3.mul    4.div        *\n");
+//	printf("*          0.exit             \n");		
+//	printf("******************************\n");
+//}
+////(3)函数指针
+//回调函数:通过函数指针进行调用
+//void Calc(int(*fp)(int, int))
+//{
+//	int x = 0, y = 0,ret=0;
+//	printf("请输入两个操作数:>");
+//	scanf("%d %d", &x, &y);
+//	ret = fp(x, y);
+//	printf("%d", ret);
+//}
+//int main()
+//{
+//	int input = 0;
+//	do {
+//		menu();
+//		printf("请选择\n");
+//		scanf("%d", &input);
+//		switch (input)
+//		{
+//		case 1:
+//			Calc(add);
+//			break;
+//		case 2:
+//			Calc(sub);
+//			break;
+//		case 3:
+//			Calc(mul);
+//			break;
+//		case 4:
+//			Calc(div);
+//			break;
+//		case 0:
+//			printf("退出\n");
+//			break;
+//		default:
+//			printf("选择错误\n");
+//			break;
+//		}
+//	} while (input!=-1);
+//	return 0;
+//}
+
+//(2)函数指针数组优化
+//int main()
+//{
+//	int input = 0;
+//	do 
+//	{
+//		int x = 0;
+//		int y = 0;
+//		int ret = 0;
+//		menu();
+//		printf("请选择>\n");
+//		scanf("%d", &input);	   //0  1   2   3   4
+//		int (*pfArr[5])(int, int) = {0,add,sub,mul,div};//转移表
+//		if (input == 0)
+//		{
+//			printf("退出\n");
+//		}
+//		else if (input>=1&&input<=4)
+//		{
+//			printf("请输入两个操作数:>");
+//			scanf("%d %d", &x, &y);
+//			ret = pfArr[input](x,y);
+//			printf("ret=%d\n", ret);
+//		}
+//		else
+//		{
+//			printf("选择错误\n");
+//		}
+//	} while (input);
+//	return 0;
+//}
+
+//(1)switch case
+//int main()
+//{
+//	int input = 0;
+//	int ret = 0;
+//	do {
+//		int x = 0, y = 0;
+//		menu();
+//		printf("请选择:>");
+//		scanf("%d", &input);
+//		if (input == -1)
+//		{
+//			printf("退出\n");
+//			break;
+//		}
+//		printf("请输入两个操作数:>");
+//		scanf("%d %d", &x, &y);
+//		switch (input)
+//		{
+//		case 1:
+//			ret = add(x, y);
+//			break;
+//		case 2:
+//			ret = sub(x, y);
+//			break;
+//		case 3:
+//			ret = mul(x, y);
+//			break;
+//		case 4:
+//			ret = div(x, y);
+//			break;
+//		case -1:
+//			printf("退出\n");
+//			break;
+//		default:
+//			printf("选择错误\n");
+//			break;
+//		}
+//		printf("%d\n", ret);
+//	} while (input!=-1);
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	//int* arr[10];//数组指针：存放数组的指针
+//	int (*pf1)(int, int) = add;
+//	int (*pf2)(int, int) = sub;
+//	int (*pf3)(int, int) = mul;
+//	int (*pf4)(int, int) = div;
+//	int (*pfarr[4])(int, int) = { sub,add,mul,div };
+//	return 0;
+//}
+
+//函数指针
+// typedef void(*)(int) pfun_t;  ×
+//   typedef void(*pfun_t)(int);// √
+//int main()
+//{
+//	void (*signal(int, void(*)(int))) (int);
+//	//这个代码是一次函数声明，该函数的函数名为signal，
+//	//该函数有两个参数，参数类型分别为int型和void(*)(int)型的函数指针类型，返回值类型也为void(*)(int) 
+//	//void (*) (int) signal(int, void(*)(int));            ×
+//	//typedef简化后：
+//	pfun_t signal(int, void(*)(int));
+//
+//	return 0;
+//}
+
+//int main()
+//{
+//	(*(void(*)())0) ();//《C陷阱与缺陷》
+//	//把0强制类型转换为：void(*)()类型的函数指针类型
+//	//(void(*)())0   表示0地址处有一个函数参数为无参，返回类型为void的函数
+//	//*(void(*)())0  找到该地址，并调用他(*地址)()
+//	//即：把0强制类型转换为类型为void(*)()的一个函数的地址，解引用0地址处的这个函数，被调用的这个函数是无参，返回类型为void
+//	return 0;
+//}
+
+//int add(int x, int y)
+//{
+//	return x + y;
+//}
+//
+//int main()
+//{
+//	printf("%p\n", &add);
+//	printf("%p\n", add);
+//	//int (*pf)(int,int) = &add;
+//	int (*pf)(int, int) = add;
+//	//int ret = (*pf)(4, 5); *在语法上相当于“摆设”
+//	int ret = pf(4, 5);
+//
+//	printf("%d\n", ret);
+//	return 0;
+//}
+
+
+//指针传参
+//void fun(int**p)
+//{
+//
+//}
+//
+//int main()
+//{
+//	int* arr[5] = { 0 };
+//	fun(arr);
+//	return 0;
+//}
+
+//void print(int* p, int len)
+//{
+//	for (int i = 0; i < len; i++)
+//	{
+//		printf("%d ", *(p + i));
+//	}
+//}
+//
+//int main()
+//{
+//	int arr[] = { 1,2,3,4,5,6,7,8,9,10 };
+//	int* p = arr;
+//	int len = sizeof(arr) / sizeof(arr[0]);
+//	print(p,len);
+//	return 0;
+//}
+
+
+
+//数组传参
+
+//fun(int arr[2][3]) {} √
+//fun(int arr[][]){}    ×
+//fun(int arr[][3]){}   √
+//fun(int (*p)[3]){}
+//int main()
+//{
+//	int arr[2][3] = { 0 };
+//	fun(arr);
+//	return 0;
+//}
+
+// 一维数组
+//void fun(int arr[]){}
+//void fun(int arr[10]) {}
+//void fun(int arr[100]){} //语法可以，但不建议
+//void fun(int* p){}
+
+//void fun2(int*arr[10]){}
+//void fun2(int*arr[]){}
+//void fun2(int** p){}
+//int main()
+//{
+//	//int arr[10] = { 0 };
+//	//fun(arr);
+//	int* arr[10] = { 0 };
+//	fun2(arr);
+//	return 0;
+//}
+
+
+
 //数组指针
-
-
 //void print2(int(*p)[5], int r, int c)
 //{
 //	for (int i = 0; i < r; i++)
