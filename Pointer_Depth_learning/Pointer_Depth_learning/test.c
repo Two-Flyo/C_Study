@@ -1,20 +1,174 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
-//指向函数指针数组的指针
-int add(int x, int y)
-{
-	return x + y;
-}
+#include<stdlib.h>
+#include<string.h>
 
+//回调函数
+
+
+//使用回调函数实现一个通用的冒泡排序函数
+struct stu
+{
+	char name[10];
+	int age;
+};
+
+void swap(char* e1, char* e2,int width)
+{
+	for (int i = 0; i < width; i++)
+	{
+		char tmp = *e1;
+		*e1 = *e2;
+		*e2 = tmp;
+		e1++, e2++;
+	}
+}
+int compar_int(const void* e1, const void* e2)
+{
+	return *(int*)e1 - *(int*)e2;
+}
+int compar_byname(const void* e1, const void* e2)
+{
+	return strcmp(((struct stu*)e1)->name, ((struct stu*)e2)->name);
+}
+void print_arr(int arr[], int len)
+{
+	for (int i = 0; i < len; i++)
+		printf("%d ", arr[i]);
+}
+void bubble_sort(void* base, size_t num, size_t width, int (*compar_int)(const void*, const void*))
+{
+	for (int i = 0; i < num - 1; i++)
+	{
+		for (int j = 0; j < num - 1 - i; j++)
+		{
+			//char可以完美的结合所传width遍历base中的元素
+			if (compar_int((char*)base + j * width, (char*)base + (j + 1) * width) > 0)
+			{
+				swap((char*)base + j * width, (char*)base + (j + 1) * width,width);
+			}
+		}
+	}
+}
+void struct_compar()
+{
+	struct stu boy[3] = { {"ddd",11},{"aaa",8},{"bbb",15} };
+	int len = sizeof(boy) / sizeof(boy[0]);
+	//按照名字排序
+	//qsort(boy, 3, sizeof(boy[0]), compar_byname);
+	//按照年领比较
+	bubble_sort(boy, 3, sizeof(boy[0]), compar_byname);
+}
 int main()
 {
-	char ch = '汉';
-	printf("%d", sizeof(ch));
-	int (*pf) (int, int) = add;//函数指针
-	int (*fparr[5])(int, int)={ add };//函数指针数组
-	int (*(*ppfarr)[5]) (int, int) = &fparr;//指向函数指针数组的指针
+	//int arr[10] = { 9,8,7,6,5,4,3,2,1,0 };
+	//int len = sizeof(arr) / sizeof(arr[0]);
+	//bubble_sort(arr, len, sizeof(arr[0]),compar_int);
+	//print_arr(arr, len);
+	struct_compar();
 	return 0;
 }
+
+// 
+//void qsort(void* base, size_t num, size_t size,int (*compar)(const void*, const void*));
+// void*: 无具体类型的指针,能够接收任意类型的地址
+//但是不能进行运算：±整数，解引用
+
+
+//
+//int compar_byname(const void* e1, const void* e2)
+//{
+//	return strcmp(((struct stu*)e1)->name, ((struct stu*)e2)->name);
+//}
+//int compar_byage(const void* e1, const void* e2)
+//{
+//	return ((struct stu*)e1)->age-((struct stu*)e2)->age;
+//}
+//
+//int cmppar_int(const void* e1, const void* e2)
+//{
+//	return *(int*)e1 - *(int*)e2;
+//}
+//
+//void struct_compar()
+//{
+//	struct stu boy[3] = { {"ddd",11},{"aaa",8},{"bbb",15} };
+//	int len = sizeof(boy) / sizeof(boy[0]);
+//	//按照名字排序
+//	//qsort(boy, 3, sizeof(boy[0]), compar_byname);
+//	//按照年领比较
+//	qsort(boy, 3, sizeof(boy[0]), compar_byage);
+//}
+//
+//void bubble_sort(int arr[], int len)
+//{
+//	for (int i = 0; i < len - 1; i++)
+//	{
+//		for (int j = 0; j < len - 1 - i; j++)
+//		{
+//			if (arr[j] > arr[j + 1])
+//			{
+//				int tmp=arr[j];
+//				arr[j] = arr[j + 1];
+//				arr[j + 1] = tmp;
+//			}
+//		}
+//	}
+//}
+//void print_arr(int arr[], int len)
+//{
+//	for (int i = 0; i < len; i++)
+//		printf("%d ", arr[i]);
+//}
+//int main()
+//{
+//	struct_compar();
+//	return 0;
+//}
+//int main()
+//{
+//	int arr[10] = { 9,8,7,6,5,4,3,2,1,0 };
+//	int len = sizeof(arr) / sizeof(arr[0]);
+//	//bubble_sort(arr, len);
+//	qsort(arr, len, sizeof(arr[0]), cmppar_int);
+//	print_arr(arr, len);
+//	return 0;
+//}
+
+//int add(int x, int y) //类型：int (*)(int,int)
+//{
+//	return x + y;
+//}
+//
+//int sub(int x, int y) //类型：int (*)(int,int)
+//{
+//	return x - y;
+//}
+//void Calc(int(*pf)(int, int))
+//{
+//	int ret = pf(3, 5);
+//	printf("%d\n", ret);
+//}
+//int main()
+//{
+//	Calc(sub);
+//	return 0;
+//}
+
+//指向函数指针数组的指针
+//int add(int x, int y)
+//{
+//	return x + y;
+//}
+//
+//int main()
+//{
+//	int (*pf) (int, int) = add;//函数指针
+//	int (*fparr[5])(int, int)={ add };//函数指针数组
+//	int (*(*ppfarr)[5])(int, int);
+//	int (*(*ppfarr)[5]) (int, int) = &fparr;//指向函数指针数组的指针
+//	return 0;
+//}
 
 
 
