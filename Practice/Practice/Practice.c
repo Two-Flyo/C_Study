@@ -1,31 +1,72 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
 #include<string.h>
-void resever(char* str)
+void find(int(*matrix)[3], int k,int r,int c)
 {
-
-}
-
-void left_move(char* str, int k)
-{
-	int len = strlen(str);
-	for (int i = 0; i < k; i++)
+	int x = 0, y = r - 1;
+	while (x <= r & y >= 0)
 	{
-		char tmp = *str;
-		for (int j = 0; j < len - 1; j++)
+		if (matrix[x][y] < k) x++;
+		if (matrix[x][y] > k) y--;
+		else
 		{
-			*(str + j) = *(str + j + 1);
+			printf("find success!");
+			return ;
 		}
-		*(str + len - 1) = tmp;v  
 	}
+	printf("find failed!\n");
 }
 int main()
 {
-	char str[] = "abcdefg";
-	left_move(str, 2);
-	printf("%s\n", str);//´òÓ¡×Ö·û´®
+	int matrix[3][3] = { 1,2,3,4,5,6,7,8,9 };
+	int num = 7;
+	find(&matrix, num,3,3);
 	return 0;
 }
+
+//void check_str(char* str1, char* str2)
+//{
+//	if (strlen(str2) !=strlen(str1))
+//	{
+//		printf("NO!\n");
+//		return;
+//	}
+//	strncat(str1, str1, strlen(str1));
+//	int* flag = strstr(str1, str2);
+//	if (flag == NULL)
+//		printf("NO!\n");
+//	else
+//		printf("YES!\n");
+//}
+//int main()
+//{
+//	(*fun)(int,int)
+//	char arr1[20] = "abcde";
+//	char arr2[] = "eabcd";
+//	check_str(arr1, arr2);
+//	return 0;
+//}
+//void left_move(char* str, int k)
+//{
+//	int len = strlen(str);
+//	for (int i = 0; i < k; i++)
+//	{
+//		char tmp = *str;
+//		for (int j = 0; j < len - 1; j++)
+//		{
+//			*(str + j) = *(str + j + 1);
+//		}
+//		*(str + len - 1) = tmp;
+//	}
+//}
+//
+//int main()
+//{
+//	char str[] = "abcdefg";
+//	left_move(str, 2);
+//	printf("%s\n", str);//´òÓ¡×Ö·û´®
+//	return 0;
+//}
 //int main()
 //{
 //	for(int a=1;a<=5;a++)
