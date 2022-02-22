@@ -2,23 +2,110 @@
 #include<stdio.h>
 #include<stddef.h>
 
-struct S
+union U1
 {
-	char a : 3;
-	char b : 4;
-	char c : 5;
-	char d : 4;
+	          //大小    对齐数
+	char c[5];// 5        1 
+	int i;    // 4        4
+};
+union U2
+{
+	             //大小    对齐数
+	short c[7]; // 14        2
+	int i;      // 4         4
 };
 
 int main()
 {
-	struct S s = { 0 };
-	s.a = 10;
-	s.b = 12;
-	s.c = 3;
-	s.d = 4;
+	char a[5];//最大对齐数
 	return 0;
 }
+
+//int main()
+//{
+//	//(1)
+//	//int a = 1;
+//	//1: 01 00 00 00
+//	//低地址--------->高地址
+//	//01 00 00 00    小端
+//	//00 00 00 01    大端
+//
+//	//char* pa=(char*)&a;
+//	//if (*pc == 1)
+//	//	printf("小端\n");
+//	//else
+//	//	printf("大端\n");
+//	//(2)
+//	union U
+//	{
+//		char a;
+//		int b;
+//	}u;
+//	u.b = 1;
+//	if (u.b == 1)
+//		printf("小端\n");
+//	else
+//		printf("大端\n");
+//	
+//	return 0;
+//}
+
+//union u
+//{
+//	char a;
+//	int b;
+//};
+//
+//int main()
+//{
+//	union u a = { 0 };
+//	//printf("%d\n", sizeof(a));
+//	printf("%p\n", &a);
+//	printf("%p\n", &(a.a));
+//	printf("%p\n", &(a.b));
+//
+//	return 0;
+//}
+
+
+//#define red 2
+//#define green 5
+//enum Color
+//{
+//	red=2,
+//	blue=5,
+//	green=7
+//};
+//
+//int main()
+//{
+//	enum Color a = red;
+//	printf("%d", a);
+//
+//	//printf("%d\n", red);
+//	//printf("%d\n", blue);
+//	//printf("%d\n", green);
+//	return 0;
+//}
+
+
+//struct S
+//{
+//	char a : 3;
+//	char b : 4;
+//	char c : 5;
+//	char d : 4;
+//};
+//
+//int main()
+//{
+//	struct S s = { 0 };
+//	s.a = 10;
+//	s.b = 12;
+//	s.c = 3;
+//	s.d = 4;
+//	return 0;
+//}
 
 //struct A
 //{
